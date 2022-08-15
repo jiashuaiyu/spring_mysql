@@ -17,6 +17,7 @@ import com.alibaba.shuaishuai.model.UserVO;
 import com.alibaba.shuaishuai.DO.User;
 import com.alibaba.shuaishuai.DO.UserExample;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,10 +35,8 @@ public class SelectService {
     @Autowired
     AdressDAO adressDAO;
 
-    private Integer pp;
 
     public User selectById(Integer id){
-        pp = 1;
         User user = userMapper.selectByPrimaryKey(id);
 
         return user;
@@ -45,6 +44,10 @@ public class SelectService {
 
 
     public List<UserVO> selectByAge(Integer age){
+
+
+        //配置分页
+        PageHelper.startPage(3, 4);
         UserExample userExample = new UserExample();
         userExample.createCriteria().andAgeGreaterThan(age);
         List<User> userList = userMapper.selectByExample(userExample);
@@ -54,9 +57,12 @@ public class SelectService {
 
     public TwoAdressVO selectAdressById(Integer id){
 
+
+
         User user = userMapper.selectByPrimaryKey(id);
         AdressExample adressExample = new AdressExample();
         adressExample.createCriteria().andNameEqualTo(user.getName());
+
         List<Adress> adressList = adressDAO.selectByExample(adressExample);
 
         TwoAdressVO twoAdressVO = ConvertAdressVO.convert(user, adressList);

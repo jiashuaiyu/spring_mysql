@@ -49,4 +49,15 @@ class SelectControllerTest {
 
     }
 
+
+    @Test
+    void selectByAge() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/selectbyage/3"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andReturn();
+
+        log.info(mvcResult.getResponse().getContentAsString());
+
+    }
+
 }
