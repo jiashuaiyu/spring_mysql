@@ -22,11 +22,14 @@ public class CreateService {
 
         JSONObject jsonpObject = JSONObject.parseObject(postJson);
         String data = jsonpObject.getString("data");
+        int num = jsonpObject.getIntValue("num");
+
+        System.out.println("service is num = "+ num);
 
 
         try {
-            System.out.println(data);
-            createDao.insert(data);
+//            System.out.println(data+" "+num);
+            createDao.insert(data, num);
         } catch (Exception e) {
             System.out.println("error:"+e.getStackTrace());
             return "error:"+e.getStackTrace();
